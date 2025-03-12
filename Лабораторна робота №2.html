@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Адаптивна навігація</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-menu {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background-color: #333;
+            color: white;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 1rem;
+            transition: max-height 0.3s ease-in-out;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem;
+            transition: background 0.3s, color 0.3s, transform 0.2s;
+        }
+        .nav-links a:hover, .nav-links .active {
+            background-color: #555;
+            border-radius: 5px;
+            color: #ffdd57;
+            transform: scale(1.1);
+        }
+        .dropdown {
+            position: relative;
+        }
+        .submenu {
+            display: none;
+            position: absolute;
+            background-color: #444;
+            list-style: none;
+            padding: 0;
+            min-width: 120px;
+            top: 100%;
+            left: 0;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+        .dropdown:hover .submenu {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .submenu li {
+            padding: 0.5rem;
+        }
+        .submenu a {
+            display: block;
+            color: white;
+            padding: 0.5rem;
+            transition: background 0.3s, transform 0.2s;
+        }
+        .submenu a:hover {
+            background-color: #666;
+            transform: scale(1.05);
+        }
+        .search-form input {
+            padding: 0.5rem;
+            border-radius: 5px;
+            border: none;
+            transition: box-shadow 0.3s;
+        }
+        .search-form input:focus {
+            box-shadow: 0 0 5px #ffdd57;
+            outline: none;
+        }
+        .burger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            flex-direction: column;
+            gap: 5px;
+            padding: 10px;
+        }
+        .burger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background: white;
+            transition: transform 0.3s, opacity 0.3s;
+        }
+        
+        @media (max-width: 992px) {
+            .nav-menu {
+                padding: 0.8rem;
+            }
+            .nav-links {
+                gap: 0.8rem;
+            }
+            .search-form input {
+                width: 150px;
+            }
+        }
+        @media (max-width: 768px) {
+            .nav-menu {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                background: #333;
+            }
+            .nav-links.show {
+                display: flex;
+            }
+            .burger {
+                display: flex;
+            }
+            .burger.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+            .burger.active span:nth-child(2) {
+                opacity: 0;
+            }
+            .burger.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(5px, -5px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-menu">
+        <div class="logo"><img src="https://static.vecteezy.com/system/resources/thumbnails/047/656/219/small/abstract-logo-design-for-any-corporate-brand-business-company-vector.jpg"></div>
+        <button class="burger" aria-label="Меню" tabindex="0" onclick="toggleMenu()">
+            <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links">
+            <li><a href="#" class="active">Головна</a></li>
+            <li><a href="#">Про нас</a></li>
+            <li class="dropdown">
+                <a href="#" aria-haspopup="true" aria-expanded="false" onclick="toggleSubmenu(event)">Послуги</a>
+                <ul class="submenu" aria-hidden="true">
+                    <li><a href="#">Дизайн</a></li>
+                    <li><a href="#">Розробка</a></li>
+                    <li><a href="#">Маркетинг</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Контакти</a></li>
+        </ul>
+        <form class="search-form">
+            <input type="text" placeholder="Пошук..." aria-label="Поле пошуку">
+            <button type="submit" aria-label="Шукати">🔍</button>
+        </form>
+    </nav>
+    <script>
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            const burger = document.querySelector('.burger');
+            navLinks.classList.toggle('show');
+            burger.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
